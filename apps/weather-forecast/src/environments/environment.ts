@@ -6,6 +6,7 @@
 
 export const environment = {
 	production: false,
+	openweathermapApiKey: '5110da0d16e469b7d22ba3bf31f5c210',
 };
 
 /*
