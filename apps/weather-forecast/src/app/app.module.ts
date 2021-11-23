@@ -10,6 +10,12 @@ import { HourlyForecastTableComponent } from './hourly-forecast-table/hourly-for
 import { DailyForecastTableComponent } from './daily-forecast-table/daily-forecast-table.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio'
+import { StoreModule } from '@ngrx/store';
+import { weatherReducer } from './weather.reducer';
 
 @NgModule({
 	declarations: [AppComponent, SearchPanelComponent, ResultPanelComponent, HourlyForecastTableComponent, DailyForecastTableComponent, PageNotFoundComponent],
@@ -22,7 +28,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 			{ path: '**', component: PageNotFoundComponent },
 		]),
 		BrowserAnimationsModule,
+		ReactiveFormsModule,
 		HttpClientModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatRadioModule,
+		StoreModule.forRoot({ weather: weatherReducer }),
+		
 	],
 	providers: [],
 	bootstrap: [AppComponent],

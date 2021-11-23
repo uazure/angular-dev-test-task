@@ -1,1 +1,11 @@
 <p>search-panel works!</p>
+<form [formGroup]="options">
+	<mat-radio-group formControlName="forecastType">
+		<mat-radio-button value="hour">Hour</mat-radio-button>
+		<mat-radio-button value="day">Day</mat-radio-button>
+	</mat-radio-group>
+
+	<mat-form-field appearance="fill">
+		<input matInput formControlName="cityName" placeholder="Simple placeholder" required />
+	</mat-form-field>
+</form>
