@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { setSearchString, setSelectedCity, reset } from './weather.actions';
+import { Location } from './interfaces/location.interface';
 
 interface WeatherState {
 	searchString: string,

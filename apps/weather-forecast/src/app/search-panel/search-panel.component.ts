@@ -42,6 +42,7 @@ export class SearchPanelComponent implements OnInit, OnDestroy {
 			.pipe(
 			  debounceTime(500)
 			).subscribe((searchString) => {
+				console.log('searching for typed in city', searchString);
 				this.store.dispatch(setSearchString({searchString}))
 			});
 
@@ -50,6 +51,12 @@ export class SearchPanelComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.subscriptions.forEach((sub) => sub.unsubscribe());
+	}
+
+	onSubmit() {
+		console.log('submitting the form');
+		const searchString = this.options.controls.cityName.value;
+		this.store.dispatch(setSearchString({ searchString }))
 	}
 
 }

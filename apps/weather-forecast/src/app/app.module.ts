@@ -16,6 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio'
 import { StoreModule } from '@ngrx/store';
 import { weatherReducer } from './weather.reducer';
+import { WeatherEffects } from './weather.effects';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
 	declarations: [AppComponent, SearchPanelComponent, ResultPanelComponent, HourlyForecastTableComponent, DailyForecastTableComponent, PageNotFoundComponent],
@@ -34,7 +36,7 @@ import { weatherReducer } from './weather.reducer';
 		MatInputModule,
 		MatRadioModule,
 		StoreModule.forRoot({ weather: weatherReducer }),
-		
+		EffectsModule.forRoot([WeatherEffects]),
 	],
 	providers: [],
 	bootstrap: [AppComponent],
