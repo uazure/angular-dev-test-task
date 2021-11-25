@@ -7,6 +7,7 @@ import { SearchPanelComponent } from './search-panel/search-panel.component';
 import { ResultPanelComponent } from './result-panel/result-panel.component';
 import { RouterModule } from '@angular/router';
 import { HourlyForecastTableComponent } from './hourly-forecast-table/hourly-forecast-table.component';
+import { DailyForecastComponent } from './daily-forecast/daily-forecast.component';
 import { DailyForecastTableComponent } from './daily-forecast-table/daily-forecast-table.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,13 +21,13 @@ import { WeatherEffects } from './weather.effects';
 import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-	declarations: [AppComponent, SearchPanelComponent, ResultPanelComponent, HourlyForecastTableComponent, DailyForecastTableComponent, PageNotFoundComponent],
+	declarations: [AppComponent, SearchPanelComponent, ResultPanelComponent, HourlyForecastTableComponent, DailyForecastTableComponent, PageNotFoundComponent, DailyForecastComponent],
 	imports: [
 		BrowserModule,
 		RouterModule.forRoot([
 			{ path: 'hourly', component: HourlyForecastTableComponent },
-			{ path: 'daily', component: DailyForecastTableComponent },
-			{ path: '', redirectTo: '/hourly', pathMatch: 'full' },
+			{ path: 'daily', component: DailyForecastComponent },
+			{ path: '', redirectTo: '/daily', pathMatch: 'full' },
 			{ path: '**', component: PageNotFoundComponent },
 		]),
 		BrowserAnimationsModule,

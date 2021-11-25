@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { DailyForecast } from './../interfaces/weather.interface';
 
 @Component({
-  selector: 'bp-daily-forecast-table',
-  templateUrl: './daily-forecast-table.component.html',
-  styleUrls: ['./daily-forecast-table.component.scss']
+	selector: 'bp-daily-forecast-table',
+	templateUrl: './daily-forecast-table.component.html',
+	styleUrls: ['./daily-forecast-table.component.scss']
 })
 export class DailyForecastTableComponent implements OnInit {
 
-  constructor() { }
+	@Input()
+	forecast: DailyForecast | null = null;
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+
+	}
+
 
 }
