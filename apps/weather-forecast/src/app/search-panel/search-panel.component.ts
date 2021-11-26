@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 })
 export class SearchPanelComponent implements OnInit, OnDestroy {
 	options: FormGroup;
-	forecastType = new FormControl('hourly');
+	forecastType = new FormControl('daily');
 	cityName = new FormControl('');
 	private subscriptions: Subscription[] = [];
 

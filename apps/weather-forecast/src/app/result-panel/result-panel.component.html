@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+
+<div *ngIf="(selectedCityError$ | async) === false">
+  <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="selectedCityError$ | async">
+  Failed to resolve city location
+</div>

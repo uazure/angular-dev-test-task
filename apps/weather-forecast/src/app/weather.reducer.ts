@@ -1,71 +1,43 @@
 import { createReducer, on } from '@ngrx/store';
-import { setSearchString, setSelectedCity, reset, setForecastType, setDailyWeather, setHourlyWeather } from './weather.actions';
+import { setSearchString, setSelectedCity, reset, setForecastType, setDailyWeather, setHourlyWeather, setDailyWeatherLoadingError, setHourlyWeatherLoadingError, setSelectedCityError } from './weather.actions';
 import { Location } from './interfaces/location.interface';
 import { ForecastType } from './types';
-
-interface WeatherForecast {
-	clouds: number
-	dew_point: number
-	dt: number
-	feels_like: { day: 308.73, night: 296.02, eve: 299.05, morn: 298.43 }
-	humidity: number
-	moon_phase: number
-	moonrise: number
-	moonset: number
-	pop: number
-	pressure: number
-	rain: number
-	sunrise: number
-	sunset: number
-	temp: { day: number, min: number, max: number, night: number, eve: number, morn: number }
-	uvi: number
-	weather: {
-		description: string
-		icon: string
-		id: number
-		main: string}[]
-	wind_deg: number
-	wind_gust: number
-	wind_speed: number
-}
-
-interface DailyForecast {
-	daily: WeatherForecast[]
-	lat: number
-	lon: number
-}
-
-interface HourlyForecast {
-	hourly: WeatherForecast[]
-	lat: number
-	lon: number
-}
+import { DailyForecast, HourlyForecast } from './interfaces/weather.interface';
 
 export interface WeatherState {
 	searchString: string,
 	selectedCityName: string,
 	selectedCityLocation: Location | null,
+	selectedCityError: boolean,
 	forecastType: ForecastType,
 	dailyForecast: DailyForecast | null,
+	dailyForecastLoadingError: boolean,
 	hourlyForecast: HourlyForecast | null,
+	hourlyForecastLoadingError: boolean,
 }
 
 export const initialState: WeatherState = {
 	searchString: '',
 	selectedCityName: '',
 	selectedCityLocation: null,
+	selectedCityError: false,
 	forecastType: 'daily',
 	dailyForecast: null,
+	dailyForecastLoadingError: false,
 	hourlyForecast: null,
+	hourlyForecastLoadingError: false,
 };
 
 const _weatherReducer = createReducer(
 	initialState,
-	on(setSearchString, (state, { searchString }) => ({ ...state, searchString, selectedCityName: initialState.selectedCityName, selectedCityLocation: initialState.selectedCityLocation})),
-	on(setSelectedCity, (state, { name, location }) => ({ ...state, selectedCityName: name, selectedCityLocation: location, dailyForecast: initialState.dailyForecast, hourlyForecast: initialState.hourlyForecast})),
+	on(setSearchString, (state, { searchString }) => ({ ...state, searchString, selectedCityName: initialState.selectedCityName, selectedCityLocation: initialState.selectedCityLocation, setSelectedCityError: initialState.selectedCityError})),
+	on(setSelectedCity, (state, { name, location }) => ({ ...state, selectedCityName: name, selectedCityLocation: location, dailyForecast: initialState.dailyForecast, hourlyForecast: initialState.hourlyForecast, dailyForecastLoadingError: false, hourlyForecastLoadingError: false, selectedCityError: initialState.selectedCityError})),
+	on(setSelectedCityError, (state, { hasError }) => ({ ...state, selectedCityError: hasError})),
 	on(setForecastType, (state, { forecastType }) => ({...state, forecastType})),
-	on(setDailyWeather, (state, {forecastData}) => ({...state, dailyForecast: forecastData})),
-	on(setHourlyWeather, (state, {forecastData}) => ({...state, hourlyForecast: forecastData})),
+	on(setDailyWeather, (state, { forecastData }) => ({ ...state, dailyForecast: forecastData, dailyForecastLoadingError: false})),
+	on(setHourlyWeather, (state, { forecastData }) => ({ ...state, hourlyForecast: forecastData, hourlyForecastLoadingError: false})),
+	on(setDailyWeatherLoadingError, (state, { hasError }) => ({ ...state, dailyForecastLoadingError: hasError})),
+	on(setHourlyWeatherLoadingError, (state, { hasError }) => ({ ...state, hourlyForecastLoadingError: hasError})),
 	on(reset, () => initialState)
 );
 

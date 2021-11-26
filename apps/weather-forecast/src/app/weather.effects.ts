@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap, mergeMap, catchError, EMPTY, map } from 'rxjs';
+import { tap, mergeMap, catchError, map, filter, of } from 'rxjs';
 import { setSearchStringAction } from './constants';
 import { GeocodingService, GeolocationResponse } from './geocoding.service';
-import { setSelectedCity } from './weather.actions';
+import { setSelectedCity, setSelectedCityError } from './weather.actions';
 
 @Injectable()
 export class WeatherEffects {
@@ -12,12 +12,17 @@ export class WeatherEffects {
 		this.actions$.pipe(
 			ofType(setSearchStringAction),
 			tap((action) => console.log('action', action, 'service is', this.geocodingService)),
+			filter((action: any) => action.searchString !== ''),
 			mergeMap((action: any) => this.geocodingService.getLocation(action.searchString).pipe(
 				tap((result) => {
 					console.log('service response', result);
 				}),
+				filter(Boolean),
 				map((response: GeolocationResponse) => setSelectedCity({name: response.name, location: {lat: response.lat, lon: response.lon}})),
-				catchError(() => EMPTY)
+				catchError((err) => {
+					console.log('caught error in effect', err);
+					return of(setSelectedCityError({hasError: true}));
+				})
 			)	
 			)
 		),

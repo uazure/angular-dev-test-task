@@ -1,2 +1,12 @@
-<p>daily-forecast-table works!</p>
-<div>{{ forecast | json }}</div>
+<div *ngIf="forecast">
+  Here goes forecast
+  <div>{{ forecast | json }}</div>
+</div>
+<div *ngIf="!forecast && !error">
+  Loading
+</div>
+<div *ngIf="error">
+  Failed to load forecast for this location
+</div>
+
+

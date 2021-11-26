@@ -12,9 +12,11 @@ export class DailyForecastTableComponent implements OnInit {
 	@Input()
 	forecast: DailyForecast | null = null;
 
+	@Input()
+	error: boolean | null = false;
+
 	ngOnInit(): void {
 
 	}
-
 
 }

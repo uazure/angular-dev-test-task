@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { selectedCityLocationSelector, dailyForecastSelector } from './../weather.selectors';
+import { selectedCityLocationSelector, dailyForecastSelector, dailyForecastLoadingErrorSelector } from './../weather.selectors';
 import { Store } from '@ngrx/store';
 import { WeatherService } from './../weather.service';
 import { combineLatest, tap, filter, EMPTY } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
-import { setDailyWeather } from '../weather.actions';
+import { setDailyWeather, setDailyWeatherLoadingError } from '../weather.actions';
 import { Location } from '../interfaces/location.interface';
 
 @Component({
@@ -16,6 +16,7 @@ export class DailyForecastComponent implements OnInit {
 
 	selectedCityLocation$ = this.store.select(selectedCityLocationSelector);
 	dailyForecast$ = this.store.select(dailyForecastSelector);
+	dailyForecastError$ = this.store.select(dailyForecastLoadingErrorSelector);
 
 
 	constructor(private store: Store, private weatherService: WeatherService) {
@@ -30,7 +31,11 @@ export class DailyForecastComponent implements OnInit {
 					console.log('service response', result);
 					this.store.dispatch(setDailyWeather({ forecastData: result.daily }));
 				}),
-				catchError(() => EMPTY)
+				catchError(() => {
+					console.log('caught error');
+					this.store.dispatch(setDailyWeatherLoadingError({hasError: true}));
+					return EMPTY;
+				})
 			)
 			)
 		)

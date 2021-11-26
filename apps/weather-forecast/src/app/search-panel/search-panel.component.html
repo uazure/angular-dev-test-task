@@ -1,11 +1,14 @@
 <p>search-panel works!</p>
 <form [formGroup]="options" (ngSubmit)="onSubmit()">
-	<mat-radio-group formControlName="forecastType">
-		<mat-radio-button value="hourly">Hour</mat-radio-button>
-		<mat-radio-button value="daily">Day</mat-radio-button>
-	</mat-radio-group>
-
-	<mat-form-field appearance="fill">
-		<input matInput formControlName="cityName" placeholder="Simple placeholder" required />
-	</mat-form-field>
+		<div class="item">
+			<mat-form-field>
+				<input matInput formControlName="cityName" placeholder="Enter city name" required autofocus/>
+			</mat-form-field>
+		</div>
+		<div class="item">
+			<mat-radio-group formControlName="forecastType">
+				<mat-radio-button value="hourly">Hour</mat-radio-button>
+				<mat-radio-button value="daily">Day</mat-radio-button>
+			</mat-radio-group>
+		</div>
 </form>
